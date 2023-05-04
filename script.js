@@ -20,10 +20,14 @@ function flipCard({ target: clickedCard }) {
 
 function matchCards(img1, img2) {
     if (img1 === img2) { // if cards matched
-        matched++; // accumulate card matched
+        matched++; // accumulate cards matched
         if (matched == 8) { // game complete
             setTimeout(() => {
-                alert("You Win!!");
+                Swal.fire( // alert
+                    'Congratulations!',
+                    getRandomQuotes(), // random quote
+                    'success'
+                );
                 return shuffleCard();
             }, 1000);
         }
@@ -32,6 +36,7 @@ function matchCards(img1, img2) {
         cardOne = cardTwo = "";
         return disableDeck = false;
     }
+
     setTimeout(() => { // shake card
         cardOne.classList.add("shake");
         cardTwo.classList.add("shake");
@@ -59,7 +64,21 @@ function shuffleCard() {
     });
 }
 
-shuffleCard(); // onload / game start
+function getRandomQuotes() {
+    const quotes = [
+        "You are unstoppable!",
+        "Cheers to you!",
+        "I knew you could do it!",
+        "You did it! So proud of you!",
+        "I knew it was only a matter of time. Well done!",
+    ];
+    const randomIndex = Math.floor(Math.random() * quotes.length); // get random index value
+    const quote = quotes[randomIndex]; // get random quote
+    return quote;
+}
+
+// onload
+shuffleCard(); // game start
 
 cards.forEach(card => {
     card.addEventListener("click", flipCard); // add action click
